@@ -10,16 +10,18 @@ import { Album } from '../albums';
 })
 export class AlbumDescriptionComponent implements OnInit {
 
-  album : Album;
+  album: Album;
 
   constructor(
-    private route : ActivatedRoute,
-    private aS : AlbumService
+    private route: ActivatedRoute,
+    private aS: AlbumService
   ) { }
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    this.album = this.aS.getAlbum(id);
+    this.aS.getAlbum(id).subscribe(album => {
+      this.album = album;
+    });
   }
 
 }

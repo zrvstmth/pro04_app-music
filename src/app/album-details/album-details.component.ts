@@ -33,14 +33,16 @@ export class AlbumDetailsComponent implements OnInit, OnChanges {
 
   songs: string[]; // array de string
   isOpen: boolean = false;
-  isDisabled: boolean = false;
+  isActive: boolean = true;
 
   // lifeCycle 
   constructor(private aS: AlbumService) {
     // console.log('constructor AlbumDetailsComponent 1');
-    this.aS.buttonPlay.subscribe(status => {
-      this.isDisabled = status;
-    });
+
+    this.aS.buttonPlay.subscribe(state => {
+      this.isActive = state;
+      console.log(state)
+    })
   }
 
   ngOnInit() {
@@ -53,16 +55,28 @@ export class AlbumDetailsComponent implements OnInit, OnChanges {
 
     // on vérifie que c'est != null
     if (this.album) {
-      const albumList = this.aS.getAlbumList(this.album.id);
+      this.aS.getAlbumList(this.album.id).subscribe(
+        list => {
 
-      if (albumList) this.songs = albumList.list;
+          console.log(list);
+
+          if (list) {
+
+            this.songs = list.list
+          }
+        }
+      );
+
       this.toggle();
     }
   }
 
   play(album: Album) {
     this.onPlay.emit(album); // émettre un album vers le parent
+  }
 
+  stop(album: Album) {
+    this.aS.stop(album);
   }
 
   toggle() {

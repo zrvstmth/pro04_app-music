@@ -8,7 +8,6 @@ import { environment } from '../../environments/environment';
   templateUrl: './albums.component.html',
   styleUrls: ['./albums.component.scss'],
   animations: [
-
   ]
 })
 export class AlbumsComponent implements OnInit {
@@ -23,15 +22,14 @@ export class AlbumsComponent implements OnInit {
   title: string = "Details des chansons d'un album...";
 
   // service on doit DI ~ préparation des services par Angular éventuellement dépend d'autre(s) service(s)
-  constructor(private aS: AlbumService) {
-    //console.log('constructor AlbumsComponent');
-    //console.log(this.aS.paginate(0, 2));
-  }
+  constructor(private aS: AlbumService) { }
 
   ngOnInit() {
     // vous pouvez passer en paramètre une fonction flèchée pour sort définie dans le service
     this.count = this.aS.count();
-    this.albums = this.aS.paginate(0, environment.perPage);
+    this.aS.paginate(0, environment.perPage).subscribe(
+      albums => this.albums = albums
+    );
   }
 
   ngOnChanges() {
@@ -57,14 +55,19 @@ export class AlbumsComponent implements OnInit {
     this.isSearch = false;
 
     if ($event) {
-      this.albums = this.aS.paginate(0, environment.perPage);
+      this.aS.paginate(0, environment.perPage).subscribe(
+        albums => this.albums = albums
+      );
     }
   }
 
   paginateParent($event: { start: number, end: number }) {
 
     const { start, end } = $event;
-    this.albums = this.aS.paginate(start, end);
+
+    this.aS.paginate(start, end).subscribe(
+      albums => this.albums = albums
+    );
   }
 
 }

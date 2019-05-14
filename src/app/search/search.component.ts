@@ -22,14 +22,16 @@ export class SearchComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    const albums = this.aS.search(form.value['word']);
-    if (albums) {
-      this.searchAlbums.emit(albums);
-      this.isSumit = true;
-    }
+    this.aS.search(form.value['word']).subscribe(albums => {
+      if (albums.length > 0) {
+        this.searchAlbums.emit(albums);
+        this.isSumit = true;
+      }
+    });
+
   }
 
-  onChangeEmit($event :string) {
+  onChangeEmit($event: string) {
     if ($event.length == 0 && this.isSumit)
       this.reload.emit(true);
   }
