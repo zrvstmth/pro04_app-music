@@ -33,14 +33,14 @@ export class AlbumDetailsComponent implements OnInit, OnChanges {
 
   songs: string[]; // array de string
   isOpen: boolean = false;
-  isActive: boolean = true;
+  isDisabled: boolean = false;
 
   // lifeCycle 
   constructor(private aS: AlbumService) {
     // console.log('constructor AlbumDetailsComponent 1');
 
     this.aS.buttonPlay.subscribe(state => {
-      this.isActive = state;
+      this.isDisabled = state;
     })
   }
 

@@ -4,6 +4,7 @@ import { AppRoutingModule } from './app-routing.module'; // plugin ou extension
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import * as firebase from 'firebase';
 
 import { AppComponent } from './app.component';
 import { AlbumsComponent } from './albums/albums.component';

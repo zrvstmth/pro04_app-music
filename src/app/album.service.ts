@@ -66,7 +66,7 @@ export class AlbumService {
   }
 
   switchOn(album: Album, options = httpOptions): Observable<Album> {
-    this.buttonPlay.next(false);
+    this.buttonPlay.next(true);
     album.status = "on";
 
     // On peut faire une copie de l'objet album mais ce n'est pas fondamental
@@ -77,7 +77,7 @@ export class AlbumService {
   }
 
   switchOff(album: Album, options = httpOptions): Observable<Album> {
-    this.buttonPlay.next(true);
+    this.buttonPlay.next(false);
     album.status = 'off';
 
     // On peut faire une copie de l'objet album mais ce n'est pas fondamental
