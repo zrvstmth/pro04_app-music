@@ -77,9 +77,10 @@ export class AlbumService {
   switchOff(album: Album): void {
     this.buttonPlay.next(true);
 
-    this.getAlbums().map(al => {
-      al.status = 'off';
-    });
+    album.status = 'off';
+    // this.getAlbums().map(al => {
+    //   al.status = 'off';
+    // });
   }
 
   paginate(start: number, end: number): Observable<Album[]> {
