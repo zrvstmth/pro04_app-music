@@ -22,8 +22,8 @@ export class AlbumService {
   private _albums: Album[] = ALBUMS; // _ convention private et protected
   private _albumList: List[] = ALBUM_LISTS;
 
-  private albumsUrl = 'https://angular-app-music.firebaseio.com/albums';
-  private albumListsUrl = 'https://angular-app-music.firebaseio.com/albumLists';
+  private albumsUrl = 'https://app-music-71bd0.firebaseio.com/albums';
+  private albumListsUrl = 'https://app-music-71bd0.firebaseio.com/albumLists';
 
   // Observer => next publication d'information et Observable d'attendre des informations et d'exécuter du code
   sendCurrentNumberPage = new Subject<{ current: number, position: Position }>();
@@ -65,22 +65,26 @@ export class AlbumService {
     return this._albums == null ? 0 : this._albums.length;
   }
 
-  switchOn(album: Album): void {
+  switchOn(album: Album, options = httpOptions): Observable<Album> {
     this.buttonPlay.next(false);
+    album.status = "on";
 
-    this.getAlbums().map(al => {
-      if (album.id === al.id) { al.status = 'on'; this.subjectAlbum.next(album); }
-      else al.status = 'off';
-    });
+    // On peut faire une copie de l'objet album mais ce n'est pas fondamental
+    // méthode { ...album } fait une copie
+    const Album = { ...album };
+
+    return this.http.put<Album>(`${this.albumsUrl}/${album.id}/.json`, Album, options);
   }
 
-  switchOff(album: Album): void {
+  switchOff(album: Album, options = httpOptions): Observable<Album> {
     this.buttonPlay.next(true);
-
     album.status = 'off';
-    // this.getAlbums().map(al => {
-    //   al.status = 'off';
-    // });
+
+    // On peut faire une copie de l'objet album mais ce n'est pas fondamental
+    // méthode { ...album } fait une copie
+    const Album = { ...album };
+
+    return this.http.put<Album>(`${this.albumsUrl}/${album.id}/.json`, Album, options)
   }
 
   paginate(start: number, end: number): Observable<Album[]> {
@@ -89,9 +93,6 @@ export class AlbumService {
       map(albums => _.values(albums)),
       map(albums => albums.slice(start, end)),
     );
-  }
-
-  stop(album: Album) {
   }
 
   search(word: string | null): Observable<Album[]> {
