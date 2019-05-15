@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -8,12 +11,24 @@ import { NgForm } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  messageError: string = null; // @todo
+
+  constructor(
+    private authS: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
   }
 
   onSubmit(form: NgForm) {
-    // TODO avec Firebase ...
+    this.authS.auth(form.value['email'], form.value['password']).then(
+      () => {
+        // la redirection après connexion
+        this.router.navigate(['/dashboard'], { queryParams: { message: 'success' } });
+      }
+    ).catch(
+      error => this.messageError = 'Error login'
+    )
   }
 }

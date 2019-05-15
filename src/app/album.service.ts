@@ -22,8 +22,8 @@ export class AlbumService {
   private _albums: Album[] = ALBUMS; // _ convention private et protected
   private _albumList: List[] = ALBUM_LISTS;
 
-  private albumsUrl = 'https://app-music-71bd0.firebaseio.com/albums';
-  private albumListsUrl = 'https://app-music-71bd0.firebaseio.com/albumLists';
+  private albumsUrl = 'https://angular-app-music.firebaseio.com/albums';
+  private albumListsUrl = 'https://angular-app-music.firebaseio.com/albumLists';
 
   // Observer => next publication d'information et Observable d'attendre des informations et d'exécuter du code
   sendCurrentNumberPage = new Subject<{ current: number, position: Position }>();
