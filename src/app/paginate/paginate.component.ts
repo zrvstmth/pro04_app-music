@@ -14,15 +14,17 @@ export class PaginateComponent implements OnInit {
 
   @Output() paginate: EventEmitter<{ start: number, end: number }> = new EventEmitter();
   @Input() position : Position;
+  @Input() changePerPage: number;
 
   perPage: number = environment.perPage; // nombre d'albums par page
   pages: number[] = []; // numéro des pages 1, 2, 3, ...
-  total: number = 0; // total des albums
+  total: number = 3; // total des albums
   currentPage: number; // page courante
   numberPages: number = 0; // nombre de page(s)
 
   constructor(private aS: AlbumService) {
-    this.total = this.aS.count();
+    // this.total = this.aS.count();
+    this.aS.count().subscribe(total => this.init(total));
 
     // on s'abonne à l'observable et donc on attend de l'info
     // envoyer par l'observer, on est en attente
@@ -36,11 +38,13 @@ export class PaginateComponent implements OnInit {
 
   ngOnInit() {
     // initialiser la création des numéros de page
-    this.init();
+    // if(this.perPageAdmin != undefined) {this.perPage = this.perPageAdmin } else { this.perPage = environment.perPage}
+    // this.init(this.total);
   }
 
-  init(page: number = 1) {
-    this.numberPages = Math.ceil(this.total / this.perPage);
+  init(total, page: number = 1) {
+    this.perPage = this.changePerPage || environment.perPage;
+    this.numberPages = Math.ceil(total / this.perPage);
     this.currentPage = page;
 
     for (let p = 0; p < this.numberPages; p++) this.pages.push(p + 1);

@@ -13,12 +13,14 @@ export class AlbumComponent implements OnInit {
   // albums: Album[] = [];
 
   albums: Observable<Album[]>;
+  // perPageAdmin: number = 5;
+  changePerPage: number;
 
-  constructor(private aS: AlbumService) {}
+  constructor(private aS: AlbumService) { this.changePerPage = environment.perPageAdmin}
 
   ngOnInit() {
 
-    this.albums = this.aS.paginate(0, environment.perPage);
+    this.albums = this.aS.paginate(0, this.changePerPage);
 
     // this.aS.getAlbums().subscribe(
     //   // albums => this.albums = albums

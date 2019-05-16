@@ -19,7 +19,8 @@
 
 export const environment = {
   production: false,
-  perPage : 3
+  perPage : 3,
+  perPageAdmin: 5
 };
 
 /*
