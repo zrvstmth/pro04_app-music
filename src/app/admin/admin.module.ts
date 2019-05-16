@@ -1,22 +1,23 @@
+
+import { NgModule } from '@angular/core';
+import { AlbumComponent } from './album/album.component';
+// shareModule permet de partager components, services, directive et pipe
+import { ShareModule } from '../share/share.module';
 import { Routes, RouterModule } from '@angular/router';
 import { GuardService } from '../guard.service';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ShareModule } from '../share/share.module';
-import { AlbumComponent } from './album/album.component';
-import { AddalbumComponent } from './addalbum/addalbum.component';
+import { AddAlbumComponent } from './add-album/add-album.component';
 
-// Dans l'AdminModule définition des routes
-const routes: Routes = [
-  { path: 'admin/add', canActivate: [GuardService], component: AddalbumComponent },
+const adminRoutes: Routes = [
+  { path: 'admin/add', canActivate: [GuardService], component: AddAlbumComponent }
 ]
+
 @NgModule({
+  declarations: [AlbumComponent, AddAlbumComponent],
   imports: [
-    CommonModule,
     ShareModule,
-    RouterModule.forChild(routes) // définition des routes dans le sous-module
+    RouterModule.forChild(adminRoutes) // route dans un sous-module
   ],
-  declarations: [AlbumComponent, AddalbumComponent],
-  exports: [AlbumComponent, RouterModule]
+  // tous les components exportables à l'extérieur dans les autres modules
+  exports: [AlbumComponent]
 })
 export class AdminModule { }

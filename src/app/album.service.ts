@@ -115,4 +115,12 @@ export class AlbumService {
     );
   }
 
+  addAlbum(album: Album): Observable<any> {
+    return this.http.post<any>(this.albumsUrl + '/.json', album);
+  }
+
+  updateAlbum(ref: string, album: Album) {
+    return this.http.put<Album>(this.albumsUrl  + "/" + ref + '/.json', album);
+  }
+
 }
