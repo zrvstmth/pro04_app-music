@@ -34,11 +34,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
   ],
   imports: [
     BrowserModule,
+    AdminModule,
     AppRoutingModule,
     // FormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    AdminModule,
     ShareModule
   ],
   providers: [],

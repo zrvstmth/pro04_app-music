@@ -1,13 +1,22 @@
+import { Routes, RouterModule } from '@angular/router';
+import { GuardService } from '../guard.service';
 import { NgModule } from '@angular/core';
-import { AlbumComponent } from './album/album.component';
-// Partager component, services,directive et pipe
+import { CommonModule } from '@angular/common';
 import { ShareModule } from '../share/share.module';
+import { AlbumComponent } from './album/album.component';
+import { AddalbumComponent } from './addalbum/addalbum.component';
 
+// Dans l'AdminModule définition des routes
+const routes: Routes = [
+  { path: 'admin/add', canActivate: [GuardService], component: AddalbumComponent },
+]
 @NgModule({
-  declarations: [AlbumComponent],
   imports: [
-    ShareModule
+    CommonModule,
+    ShareModule,
+    RouterModule.forChild(routes) // définition des routes dans le sous-module
   ],
-  exports : [AlbumComponent]
+  declarations: [AlbumComponent, AddalbumComponent],
+  exports: [AlbumComponent, RouterModule]
 })
 export class AdminModule { }
