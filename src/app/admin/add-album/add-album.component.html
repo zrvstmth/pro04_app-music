@@ -1,4 +1,5 @@
 <form class="row" [formGroup]="albumForm" (ngSubmit)="onSubmit()">
+  <p *ngIf="messageError">{{  messageError }}</p>
   <div class="form-group col-md-12">
     <label for="name">Name :</label>
     <input formControlName="name" type="text" class="form-control" id="name" aria-describedby="emailHelp">
@@ -48,5 +49,19 @@
     <label for="ref">Description :</label>
     <textarea formControlName="description" class="form-control" id="description" rows="3"></textarea>
   </div>
+  <div class="form-group col-md-12">
+    <label for="ref">Proposition de prix min 100 Ether (sans taxte de 5% ajoutée) :</label>
+    <input formControlName="proposition" type="text" class="form-control" id="proposition" aria-describedby="emailHelp">
+    <div *ngIf="proposition.invalid && proposition.touched" class="alert alert-danger">
+      <div *ngIf="proposition.errors.min">
+        Error min 100
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group col-md-12">
+    <p>Proposition : {{ priceTTC.value || 'no price' }} Eth</p>
+  </div>
+
   <button [disabled]="albumForm.invalid" type="submit" class="btn btn-primary">Add</button>
 </form>

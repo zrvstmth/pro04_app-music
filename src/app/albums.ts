@@ -9,6 +9,10 @@ export class Album {
     url?: string;
     like?: string;
     tags?: Array<string>
+    priceTTC?: number;
+    priceHT?: number;
+    price?: number;
+    proposition?: number | string;
 }
 
 export class List {

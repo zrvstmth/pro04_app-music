@@ -123,4 +123,8 @@ export class AlbumService {
     return this.http.put<Album>(this.albumsUrl  + "/" + ref + '/.json', album);
   }
 
+  onInputChange(value: number) {
+    
+  }
+
 }

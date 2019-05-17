@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Album } from 'src/app/albums';
 import { AlbumService } from 'src/app/album.service';
+import { Album } from 'src/app/albums';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-album',
@@ -10,29 +11,25 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./album.component.scss']
 })
 export class AlbumComponent implements OnInit {
-  // albums: Album[] = [];
 
   albums: Observable<Album[]>;
-  // perPageAdmin: number = 5;
-  changePerPage: number;
+  changePerpage: number;
+  message: string;
 
-  constructor(private aS: AlbumService) { this.changePerPage = environment.perPageAdmin}
+  constructor(private aS: AlbumService, private route: ActivatedRoute) {
+    // nombre d'albums par page dans l'administration
+    // en fonction des variables d'environement
+    this.changePerpage = environment.perPageAdmin;
+    this.message = this.route.snapshot.paramMap.get('message');
+  }
 
   ngOnInit() {
-
-    this.albums = this.aS.paginate(0, this.changePerPage);
-
-    // this.aS.getAlbums().subscribe(
-    //   // albums => this.albums = albums
-    // );
-
+    this.albums = this.aS.paginate(0, this.changePerpage);
   }
 
   paginateParent($event: { start: number, end: number }) {
-
     const { start, end } = $event;
 
     this.albums = this.aS.paginate(start, end);
   }
-
 }
